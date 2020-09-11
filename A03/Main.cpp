@@ -32,6 +32,12 @@ int main(){
 	cout<<"\nTransmitted Message:  ";
 	for(int i=0;i<n+m-1;i++)
 		cout<<encodedMessage[i]<<" ";
+		
+	int choice;
+	cout<<"\n\nAdd Error? (0/1): ";
+	cin>>choice;
+	if(choice==1)
+		encodedMessage[0] = not encodedMessage[0];
 	
 	receiver.receive(encodedMessage);
 	
