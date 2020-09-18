@@ -1,10 +1,13 @@
 #include "bits/stdc++.h"
+#include "ctime"
 #include "Sender.cpp"
 #include "Receiver.cpp"
 using namespace std;
 
 
 int main(){
+	srand((int)time(0));
+	
 	string message, polynomial;
 	cout<<"Enter Message: ";
 	cin>>message;
@@ -18,7 +21,6 @@ int main(){
 	
 	sender.setPolynomial(polynomial);
 	receiver.setPolynomial(polynomial);
-//	receiver.setPolynomial("100000111");
 	sender.setMessage(message);
 	
 	sender.encode();
@@ -36,8 +38,10 @@ int main(){
 	int choice;
 	cout<<"\n\nAdd Error? (0/1): ";
 	cin>>choice;
-	if(choice==1)
-		encodedMessage[0] = not encodedMessage[0];
+	if(choice==1){
+		int i = rand()%n;
+		encodedMessage[i] = not encodedMessage[i];
+	}
 	
 	receiver.receive(encodedMessage);
 	
