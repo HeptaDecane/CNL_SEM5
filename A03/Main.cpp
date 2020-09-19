@@ -29,16 +29,16 @@ int main(){
 	cout<<"\nCRC: ";
 	for(int i=0;i<m-1;i++)
 		cout<<crc[i]<<" ";
+	cout<<"\n";
 	
+	retransmit:
 	bool* encodedMessage = sender.getEncodedMessage();
 	cout<<"\nTransmitted Message:  ";
 	for(int i=0;i<n+m-1;i++)
 		cout<<encodedMessage[i]<<" ";
 		
-	int choice;
-	cout<<"\n\nAdd Error? (0/1): ";
-	cin>>choice;
-	if(choice==1){
+	
+	if(rand()%2){
 		int i = rand()%n;
 		encodedMessage[i] = not encodedMessage[i];
 	}
@@ -50,10 +50,12 @@ int main(){
 	for(int i=0;i<n+m-1;i++)
 		cout<<receivedMessage[i]<<" ";
 	
-	if(receiver.decode())
-		cout<<"\nerror detected in received message";
+	if(receiver.decode()){
+		cout<<"\nError detected\nRe-transmit data\n";
+		goto retransmit;
+	}
 	else
-		cout<<"\nno error in received message";
+		cout<<"\nNo Error\nSuccess\n";
 	
 	cout<<endl;
 	return 0;
