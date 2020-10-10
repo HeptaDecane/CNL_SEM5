@@ -52,6 +52,8 @@ int main(){
 	
 	if(receiver.decode()){
 		cout<<"\nError detected\nRe-transmit data\n";
+		sender.setMessage(message);
+		sender.encode();
 		goto retransmit;
 	}
 	else
