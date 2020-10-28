@@ -46,10 +46,8 @@ public:
 		bool error = false;
 		for(int i=0;i<n+m-1;i++)
 			error = error or temp[i];
-
 			
 		return error;
 	}
 	
 };
-

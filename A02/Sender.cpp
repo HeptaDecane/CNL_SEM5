@@ -1,5 +1,3 @@
-// Write a program for error detection and correction for 7/8 bits ASCII codes using CRC
-
 #include "bits/stdc++.h"
 using namespace std;
 

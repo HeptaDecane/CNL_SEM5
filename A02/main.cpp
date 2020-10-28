@@ -1,3 +1,5 @@
+// Write a program for error detection and correction for 7/8 bits ASCII codes using CRC
+
 #include "bits/stdc++.h"
 #include "ctime"
 #include "Sender.cpp"
@@ -6,14 +8,14 @@ using namespace std;
 
 
 int main(){
-	srand((int)time(0));
+	srand((int)time(nullptr));
 	
 	string message, polynomial;
 	cout<<"Enter Message: ";
 	cin>>message;
 	cout<<"Enter Polynomial: ";
 	cin>>polynomial;
-	
+
 	int n = message.length();
 	int m = polynomial.length();
 	Sender sender(n,m);
@@ -62,4 +64,3 @@ int main(){
 	cout<<endl;
 	return 0;
 }
-
