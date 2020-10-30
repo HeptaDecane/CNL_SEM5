@@ -1,15 +1,15 @@
-import java.util.Arrays;
+
 
 public class Subnet {
-    String ipv4;
-    int[] octets;
-    int[] subnetMask;
-    int[] networkAddress;
-    int[] directBroadCastAddress;
-    char ipv4Class;
-    int defaultHostBits;
-    int subnets,hosts;
-    int addresses;
+    private String ipv4;
+    private int[] octets;
+    private int[] subnetMask;
+    private int[] networkAddress;
+    private int[] directBroadCastAddress;
+    private char ipv4Class;
+    private int defaultHostBits;
+    private int subnets,hosts;
+    private int addresses;
 
     Subnet(){
         this.ipv4 = "0.0.0.0";
@@ -33,19 +33,19 @@ public class Subnet {
                 this.defaultHostBits = 24;
             } else if(this.octets[0]>=128 && this.octets[0]<=191) {
                 this.ipv4Class = 'B';
-                this.subnetMask = new int[]{255,255,0,0};
+                this.subnetMask = new int[]{255, 255, 0, 0};
                 this.defaultHostBits = 16;
             } else if(this.octets[0]>=192 && this.octets[0]<=223) {
                 this.ipv4Class = 'C';
-                this.subnetMask = new int[]{255,255,255,0};
+                this.subnetMask = new int[]{255, 255, 255, 0};
                 this.defaultHostBits = 8;
             } else if(this.octets[0]>=224 && this.octets[0]<=239) {
                 this.ipv4Class = 'D';
-                this.subnetMask = new int[]{255,255,255,255};
+                this.subnetMask = new int[]{255, 255, 255, 255};
                 this.defaultHostBits = 0;
             } else {
                 this.ipv4Class = 'E';
-                this.subnetMask = new int[]{255,255,255,255};
+                this.subnetMask = new int[]{255, 255, 255, 255};
                 this.defaultHostBits = 0;
             }
         }
@@ -55,11 +55,12 @@ public class Subnet {
     Subnet(String ipv4,int addresses){
         this(ipv4);
         this.addresses = addresses;
+        divide();
     }
 
-    public void divide(){
+    public boolean divide(){
         if(addresses > Math.pow(2, defaultHostBits)){
-            // return false;
+            return false;
         }
         int subnetHostBits = (int) Math.ceil(Math.log(addresses)/Math.log(2));
         String subnetHost = "";
@@ -89,9 +90,9 @@ public class Subnet {
             directBroadCastAddress[i] = directBroadCastAddress[i] + offset%256 + carry;
             offset = offset/256;
             carry = directBroadCastAddress[i]/256;
-            directBroadCastAddress[i] = directBroadCastAddress[i] % 256;
+            if(carry > 0)
+                directBroadCastAddress[i] = 255;
         }
-
 
         int logSubnets = 0;
         for(int i=0;i<subnetHost.length();i++) {
@@ -100,10 +101,7 @@ public class Subnet {
         }
         hosts = (int) Math.pow(2,subnetHostBits) - 2;
         subnets = (int) Math.pow(2,logSubnets);
-    }
-
-    public char getIpv4Class() {
-        return ipv4Class;
+        return true;
     }
 
     public static boolean isValidIpv4(String ipv4){
@@ -116,18 +114,47 @@ public class Subnet {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Subnet{" +
-                "ipv4='" + ipv4 + '\'' +
-                ", octets=" + Arrays.toString(octets) +
-                ", subnetMask=" + Arrays.toString(subnetMask) +
-                ", networkAddress=" + Arrays.toString(networkAddress) +
-                ", directBroadCastAddress=" + Arrays.toString(directBroadCastAddress) +
-                ", ipv4Class=" + ipv4Class +
-                ", defaultHostBits=" + defaultHostBits +
-                ", subnets=" + subnets +
-                ", hosts=" + hosts +
-                '}';
+    public String getIpv4() {
+        return ipv4;
+    }
+
+    public int[] getOctets() {
+        return octets;
+    }
+
+    public int[] getSubnetMask() {
+        return subnetMask;
+    }
+
+    public int[] getNetworkAddress() {
+        return networkAddress;
+    }
+
+    public int[] getDirectBroadCastAddress() {
+        return directBroadCastAddress;
+    }
+
+    public char getIpv4Class() {
+        return ipv4Class;
+    }
+
+    public int getDefaultHostBits() {
+        return defaultHostBits;
+    }
+
+    public int getSubnets() {
+        return subnets;
+    }
+
+    public int getHosts() {
+        return hosts;
+    }
+
+    public int getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(int addresses) {
+        this.addresses = addresses;
     }
 }
