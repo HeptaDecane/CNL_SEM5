@@ -1,0 +1,3 @@
+### Lab Assignment on Unit VI:
+Write a program for DNS lookup. Given an IP address input, it should return URL and vice-
+versa.
